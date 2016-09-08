@@ -18,7 +18,7 @@ import fpt.com.vn.model.Person;
 
 public class test1 {
 	
-	public static final String PATH ="src/resources/adult.data2.txt";
+	public static final String PATH ="src/resources/adult.data.txt";
 	public static final Map<String,List<Person>> educations = new HashMap<>();
 	public static final Map<EduAndOccupation,List<Person>> eduAndOcc = new HashMap<>();
 	public static final List<Person> persons = new ArrayList<Person>();
@@ -49,8 +49,8 @@ public class test1 {
 			person.setNativeCountry(raw[13]);
 			person.setIncome(raw[14]);
 			persons.add(person);
-			educationIncome(person);
-			educationAndOccupationIncome(person);
+			educationWithIncome(person);
+			educationAndOccupationWithIncome(person);
 			}		
 		}
 		reader.close();
@@ -62,7 +62,7 @@ public class test1 {
 	
 	// Begin test 2
 	/* Filter data and put in map*/
-	public static void educationIncome(Person person){				
+	public static void educationWithIncome(Person person){				
 		List<Person> persons = educations.get(person.getEducation());
 		if(">50K".equals(person.getIncome().trim())){
 			if(persons == null){
@@ -94,7 +94,7 @@ public class test1 {
 	
 	//Begin of Test3
 	/* Filter data and put in map*/
-	public static void educationAndOccupationIncome(Person person){
+	public static void educationAndOccupationWithIncome(Person person){
 		EduAndOccupation eduAndOccupation = new EduAndOccupation();
 		eduAndOccupation.setEducation(person.getEducation());
 		eduAndOccupation.setOccupation(person.getOccupation());
