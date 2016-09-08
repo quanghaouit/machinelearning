@@ -18,7 +18,7 @@ import fpt.com.vn.model.Person;
 
 public class test1 {
 	
-	public static final String PATH ="src/resources/adult.data.txt";
+	public static final String PATH ="src/resources/adult.data2.txt";
 	public static final Map<String,List<Person>> educations = new HashMap<>();
 	public static final Map<EduAndOccupation,List<Person>> eduAndOcc = new HashMap<>();
 	public static final List<Person> persons = new ArrayList<Person>();
@@ -53,13 +53,15 @@ public class test1 {
 			educationAndOccupationIncome(person);
 			}		
 		}
-		printResultTest2();
-		
-		//printResultTest3();
 		reader.close();
+		
+		printResultTest2();		
+		//printResultTest3();
+		
 	}
 	
 	// Begin test 2
+	/* Filter data and put in map*/
 	public static void educationIncome(Person person){				
 		List<Person> persons = educations.get(person.getEducation());
 		if(">50K".equals(person.getIncome().trim())){
@@ -75,22 +77,23 @@ public class test1 {
 	public static void printResultTest2(){
 		DecimalFormat df = new DecimalFormat("#.##");
 		System.out.println("--- Counting and grouping by education level, where income >50K ---");
-		Integer total = test1.persons.size();
-		Integer total50 = 0;
+		Integer totalpersons = test1.persons.size();
+		Integer totalresult = 0;
 		for (Map.Entry entry : educations.entrySet()) {
 			List<Person> persons = (List<Person>) entry.getValue();
-			total50 += persons.size();
-			double percent = (double)(persons.size()*100)/total;
+			totalresult += persons.size();
+			double percent = (double)(persons.size()*100)/totalpersons;
 			System.out.println("["+entry.getKey()+"] " + "groupSize = " + persons.size()+" takes "+df.format(percent)+"% in total");
 			System.out.println(".................................................................................................");
 		} 
-		double percenttotal = (double)total50*100/total;
-		System.out.println("Total persons that incom >50K = "+total50+" takes "+df.format(percenttotal)+"% in total");
-		System.out.println("Total persons = "+total);
+		double percenttotal = (double)totalresult*100/totalpersons;
+		System.out.println("Total persons that incom >50K = "+totalresult+" takes "+df.format(percenttotal)+"% in total");
+		System.out.println("Total persons = "+totalpersons);
 	}
 	// End of Test2
 	
 	//Begin of Test3
+	/* Filter data and put in map*/
 	public static void educationAndOccupationIncome(Person person){
 		EduAndOccupation eduAndOccupation = new EduAndOccupation();
 		eduAndOccupation.setEducation(person.getEducation());
@@ -110,8 +113,8 @@ public class test1 {
 	public static void printResultTest3(){
 		DecimalFormat df = new DecimalFormat("#.##");
 		System.out.println("--- Counting and grouping by Education And Occupation, where income <=50K ---");
-		Integer total = test1.persons.size();
-		Integer total50 = 0;
+		Integer totalpersons = test1.persons.size();
+		Integer totalresult = 0;
 		
 		EduAndOccupation minkey = new EduAndOccupation();
 		List<Person> minvalue = persons;
@@ -119,21 +122,21 @@ public class test1 {
 		for (Map.Entry entry : eduAndOcc.entrySet()) {			
 			List<Person> persons = (List<Person>) entry.getValue();
 			EduAndOccupation key = (EduAndOccupation)entry.getKey();
-			total50 += persons.size();
+			totalresult += persons.size();
 			if(persons.size() < minvalue.size()){
 				minvalue = persons;
 				minkey = key;
 			}						
-			double percent = (double)(persons.size()*100)/total;
+			double percent = (double)(persons.size()*100)/totalpersons;
 			System.out.println("["+key.getEducation()+", "+key.getOccupation() +"] " + "groupSize = " + persons.size()+" takes "+df.format(percent)+"% in total");
 			System.out.println(".................................................................................................");
 		} 
-		double percenttotal = (double)total50*100/total;
-		double percentmin = (double)minvalue.size()*100/total;
+		double percenttotal = (double)totalresult*100/totalpersons;
+		double percentmin = (double)minvalue.size()*100/totalpersons;
 		
 		System.out.println("Min is ["+minkey.getEducation()+", "+ minkey.getOccupation()+"] takes "+df.format(percentmin)+"% in total");
-		System.out.println("Total persons that incom >50K = "+total50+" takes "+df.format(percenttotal)+"% in total");
-		System.out.println("Total persons = "+total);
+		System.out.println("Total persons that incom >50K = "+totalresult+" takes "+df.format(percenttotal)+"% in total");
+		System.out.println("Total persons = "+totalpersons);
 	}
 	//end of test 3
 	
